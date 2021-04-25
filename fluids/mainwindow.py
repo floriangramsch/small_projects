@@ -12,9 +12,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Fluids!")
-        self.size = N
-        self.window_width = self.size * SCALE
-        self.window_height = self.size * SCALE
+        self.size = 16
+        self.scale = 50
+        self.window_width = self.size * self.scale
+        self.window_height = self.size * self.scale
         self.resize(self.window_width, self.window_height)
         self.pmousex = 0
         self.pmousey = 0
@@ -27,13 +28,13 @@ class MainWindow(QMainWindow):
             self.close()
 
     def mouseMoveEvent(self, a0: QtGui.QMouseEvent) -> None:
-        self.fluid.addDensity(a0.x()//SCALE, a0.y()//SCALE, 100)
+        self.fluid.addDensity(a0.x()//self.scale, a0.y()//self.scale, 100)
         amtx = a0.x() - self.pmousex
         amty = a0.y() - self.pmousey
         self.pmousex = a0.x()
         self.pmousey = a0.y()
 
-        self.fluid.addVelocity(a0.x()//SCALE, a0.y()//SCALE, amtx, amty)
+        self.fluid.addVelocity(a0.x()//self.scale, a0.y()//self.scale, amtx, amty)
 
     def initialize_ui(self):
         ## Setting up the Window
@@ -60,7 +61,7 @@ class MainWindow(QMainWindow):
         self.brush = QBrush()
 
     def init(self):
-        self.fluid = Fluid(self.size, 0.01, 0, 0)  
+        self.fluid = Fluid(self.size, self.scale, 4, 0.01, 0, 0)  
 
     def update(self):
         self.fluid.step()
