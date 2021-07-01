@@ -93,7 +93,7 @@ class MainWindow(qw.QDialog):
 
     def test_zero(self):
         btn_insert = f"INSERT INTO {self.combo.currentText()} (points, total) VALUES (%s, %s)"
-        self.mycursor.execute(btn_insert, (0, self.total.text()))
+        self.mycursor.execute(btn_insert, (self.points.text(), self.total.text()))
 
         self.mycursor.execute("SELECT round((sum(points)/sum(total))*100, 2) as Average from Statistik;")
         self.statistik_mean.setText(str(self.mycursor.fetchone()[0]))
@@ -116,18 +116,18 @@ class MainWindow(qw.QDialog):
         print(f"{self.combo.currentText()} Value Updated!")
 
     def init_db(self):
-        # self.mydb = mysql.connector.connect(
-        #     host="localhost",
-        #     user="root",
-        #     password="1234",
-        #     database="points"
-        #     )
         self.mydb = mysql.connector.connect(
             host="localhost",
-            user="flo",
-            password="2406",
+            user="root",
+            password="1234",
             database="points"
             )
+        # self.mydb = mysql.connector.connect(
+        #     host="localhost",
+        #     user="flo",
+        #     password="2406",
+        #     database="points"
+        #     )
         self.mycursor = self.mydb.cursor()
 
         self.mycursor.execute("SELECT round((sum(points)/sum(total))*100, 2) as Average from Statistik;")
