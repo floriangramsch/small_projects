@@ -14,6 +14,8 @@ import sys
 class MainWindow(qw.QDialog):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
+        self.setWindowTitle("Punktestand")
+
         self.init_db()
 
         fbox = qw.QFormLayout()
